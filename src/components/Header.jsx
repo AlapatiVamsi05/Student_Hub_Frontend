@@ -34,21 +34,25 @@ export default function Header() {
                 <Link to="/about">About Us</Link>
                 <Link to="/contact">Contact Us</Link>
                 <Link to="/profile">Profile</Link>
+
                 {authed && (
                     <Link className="btn secondary" to="/create" style={{ marginRight: 10 }}>
                         Create Post
                     </Link>
                 )}
+
                 {authed ? (
-                    <button className="btn" onClick={logout}>
-                        Logout
-                    </button>
+                    <button className="btn" onClick={logout}>Logout</button>
                 ) : (
-                    <Link className="btn" to="/login">
-                        Login
-                    </Link>
+                    <>
+                        <Link className="btn secondary" to="/register" style={{ marginRight: 10 }}>
+                            Register
+                        </Link>
+                        <Link className="btn" to="/login">Login</Link>
+                    </>
                 )}
             </div>
+
         </header>
     );
 }
