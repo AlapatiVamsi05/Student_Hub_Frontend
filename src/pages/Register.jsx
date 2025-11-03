@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { API_BASE } from "../App";
 
 export default function Register() {
@@ -45,7 +45,7 @@ export default function Register() {
                 {msg && <div className="small muted">{msg}</div>}
             </form>
             <div className="auth-switch">
-                Already have an account? <a href="/login">Login here</a>.
+                Already have an account? <Link to="/login">Login here</Link>.
             </div>
         </div>
     );
