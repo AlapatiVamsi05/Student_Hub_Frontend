@@ -51,6 +51,9 @@ export default function Login() {
                     For testing, enter the username as <b>testuser1</b> and password as <b>pass1</b>
                 </div>
             </form>
+            <div className="auth-switch">
+                Don't have an account? <a href="/register">Register here</a>.
+            </div>
         </div>
     );
 }

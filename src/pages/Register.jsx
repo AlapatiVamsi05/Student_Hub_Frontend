@@ -44,6 +44,9 @@ export default function Register() {
                 <button className="btn" type="submit">Register</button>
                 {msg && <div className="small muted">{msg}</div>}
             </form>
+            <div className="auth-switch">
+                Already have an account? <a href="/login">Login here</a>.
+            </div>
         </div>
     );
 }

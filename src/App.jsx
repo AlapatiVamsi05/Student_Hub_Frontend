@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import CreatePost from "./pages/CreatePost";
 import Register from "./pages/Register";
+import Landing from "./pages/Landing";
 
 
 export const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3030";
@@ -23,7 +24,8 @@ export default function App() {
         <Sidebar />
         <div>
           <Routes>
-            <Route path="/" element={<Posts />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/posts" element={<Posts />} />
             <Route path="/roadmaps" element={<Roadmaps />} />
             <Route path="/repos" element={<Repos />} />
             <Route path="/login" element={<Login />} />
