@@ -1,89 +1,75 @@
-export default function About() {
+import React, { useState } from "react";
+import { API_BASE } from "../App";
+
+export default function Contact() {
+    const [message, setMessage] = useState("");
+    const [email, setEmail] = useState("");
+    const [popupShown, setPopupShown] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!popupShown) {
+            alert("Your request will be sent to the admins for review. Thank you!");
+            setPopupShown(true);
+        }
+
+        try {
+            const res = await fetch(`${API_BASE}/requests`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, message }),
+            });
+            const data = await res.json();
+            if (res.ok) {
+                alert("Your request has been recorded!");
+                setEmail("");
+                setMessage("");
+            } else {
+                alert(data.message || "Error saving your request.");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Server error while submitting your request.");
+        }
+    };
+
     return (
-        <div
-            style={{
-                minHeight: "100vh",
-                background: "linear-gradient(135deg, #4f46e5, #3b82f6)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "2rem",
-                color: "#fff",
-            }}
-        >
-            <div
-                style={{
-                    background: "rgba(255, 255, 255, 0.1)",
-                    borderRadius: "20px",
-                    padding: "3rem",
-                    maxWidth: "900px",
-                    textAlign: "center",
-                    boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)",
-                    backdropFilter: "blur(8px)",
-                }}
-            >
-                <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>About StudentHub</h1>
-                <p style={{ fontSize: "1.15rem", lineHeight: 1.7, marginBottom: "2rem" }}>
-                    Welcome to <strong>StudentHub</strong> — a digital space created to empower students by connecting
-                    them with peers, resources, and opportunities. We believe that learning grows stronger through
-                    collaboration and community.
-                </p>
-
-                <div
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                        gap: "1.5rem",
-                        textAlign: "left",
-                    }}
-                >
-                    <div
-                        style={{
-                            background: "rgba(255,255,255,0.15)",
-                            padding: "1.5rem",
-                            borderRadius: "12px",
-                        }}
-                    >
-                        <h2 style={{ fontSize: "1.3rem", marginBottom: ".5rem" }}>🎯 Our Mission</h2>
-                        <p>
-                            To simplify academic life by providing one platform for collaboration, idea sharing, and
-                            access to valuable student resources.
-                        </p>
-                    </div>
-
-                    <div
-                        style={{
-                            background: "rgba(255,255,255,0.15)",
-                            padding: "1.5rem",
-                            borderRadius: "12px",
-                        }}
-                    >
-                        <h2 style={{ fontSize: "1.3rem", marginBottom: ".5rem" }}>💡 Our Vision</h2>
-                        <p>
-                            To become the go-to online hub where students from every background can connect, learn, and
-                            innovate together.
-                        </p>
-                    </div>
-
-                    <div
-                        style={{
-                            background: "rgba(255,255,255,0.15)",
-                            padding: "1.5rem",
-                            borderRadius: "12px",
-                        }}
-                    >
-                        <h2 style={{ fontSize: "1.3rem", marginBottom: ".5rem" }}>🌱 Our Values</h2>
-                        <p>
-                            Collaboration, curiosity, and creativity — these principles guide everything we build at
-                            StudentHub.
-                        </p>
-                    </div>
-                </div>
-
-                <p style={{ marginTop: "2rem", opacity: 0.85 }}>
-                    🚧 This Project is still evolving — stay tuned as we bring new features and stories from our growing
-                    student community!
-                </p>
+        <div className="centered">
+            <div className="card" style={{ textAlign: "center", maxWidth: 400 }}>
+                <h2>Contact Us</h2>
+                <p>You can leave your message or feedback below. Kindly note that direct communication from the admin side is not available at the moment.</p>
+                <form className="form" onSubmit={handleSubmit}>
+                    <label>
+                        Email
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Your email"
+                            required
+                        />
+                    </label>
+                    <label>
+                        Message
+                        <textarea
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            placeholder="Write your request or feedback..."
+                            required
+                            rows="4"
+                            style={{
+                                width: "100%",
+                                padding: "10px",
+                                borderRadius: "10px",
+                                border: "1px solid #e5e7eb",
+                            }}
+                        />
+                    </label>
+                    <button type="submit" className="btn">
+                        Submit Request
+                    </button>
+                </form>
             </div>
         </div>
     );
