@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Card from "../components/Card";
 import { API_BASE } from "../App";
 
 const token = () => localStorage.getItem("token");
@@ -14,7 +13,6 @@ export default function Repos() {
         const res = await fetch(`${API_BASE}/repos`);
         const data = await res.json();
         setItems(data);
-
         const t = token();
         if (t) {
             try {
@@ -41,12 +39,12 @@ export default function Repos() {
             setForm({ title: "", link: "", image: "", content: "" });
             load();
         } else {
-            alert("Failed to add repo (check admin rights)");
+            alert("Failed to add repository (check admin rights)");
         }
     };
 
     const del = async (id) => {
-        const reason = prompt("Enter reason for deleting this repo:");
+        const reason = prompt("Enter reason for deleting this repository:");
         if (!reason) return;
         await fetch(`${API_BASE}/repos/${id}`, {
             method: "DELETE",
@@ -60,8 +58,9 @@ export default function Repos() {
     };
 
     return (
-        <div className="cards">
+        <div className="roadmap-container">
             <h2 className="content-title">Repositories</h2>
+
             {isAdmin && (
                 <>
                     <button className="btn" onClick={() => setShowForm(!showForm)}>
@@ -100,30 +99,28 @@ export default function Repos() {
                 </>
             )}
 
-            {items.map((it) => (
-                <Card
-                    key={it._id}
-                    image={it.image}
-                    title={it.title}
-                    body={<span>{it.content}</span>}
-                    footer={
-                        <>
+            <div className="grid-container">
+                {items.map((it) => (
+                    <div key={it._id} className="grid-card">
+                        <img src={it.image} alt={it.title} />
+                        <h3>{it.title}</h3>
+                        <p>{it.content}</p>
+                        <div className="grid-footer">
                             <a className="link" href={it.link} target="_blank" rel="noreferrer">
                                 View Repository
                             </a>
                             {isAdmin && (
                                 <button
                                     className="btn secondary"
-                                    style={{ marginLeft: 10 }}
                                     onClick={() => del(it._id)}
                                 >
                                     Delete
                                 </button>
                             )}
-                        </>
-                    }
-                />
-            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

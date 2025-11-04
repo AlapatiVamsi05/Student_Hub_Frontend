@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Card from "../components/Card";
 import { API_BASE } from "../App";
 
 const token = () => localStorage.getItem("token");
@@ -14,6 +13,7 @@ export default function Roadmaps() {
         const res = await fetch(`${API_BASE}/roadmaps`);
         const data = await res.json();
         setItems(data);
+
         const t = token();
         if (t) {
             try {
@@ -59,8 +59,9 @@ export default function Roadmaps() {
     };
 
     return (
-        <div className="cards">
+        <div className="roadmap-container">
             <h2 className="content-title">Roadmaps</h2>
+
             {isAdmin && (
                 <>
                     <button className="btn" onClick={() => setShowForm(!showForm)}>
@@ -99,30 +100,28 @@ export default function Roadmaps() {
                 </>
             )}
 
-            {items.map((it) => (
-                <Card
-                    key={it._id}
-                    image={it.image}
-                    title={it.title}
-                    body={<span>{it.content}</span>}
-                    footer={
-                        <>
+            <div className="grid-container">
+                {items.map((it) => (
+                    <div key={it._id} className="grid-card">
+                        <img src={it.image} alt={it.title} />
+                        <h3>{it.title}</h3>
+                        <p>{it.content}</p>
+                        <div className="grid-footer">
                             <a className="link" href={it.link} target="_blank" rel="noreferrer">
                                 View Roadmap
                             </a>
                             {isAdmin && (
                                 <button
                                     className="btn secondary"
-                                    style={{ marginLeft: 10 }}
                                     onClick={() => del(it._id)}
                                 >
                                     Delete
                                 </button>
                             )}
-                        </>
-                    }
-                />
-            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
