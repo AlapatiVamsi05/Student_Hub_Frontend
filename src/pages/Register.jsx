@@ -14,8 +14,8 @@ export default function Register() {
         e.preventDefault();
         setMsg("");
 
-        if (password.length < 6) {
-            setMsg("Password must be at least 6 characters long");
+        if (password.length < 4) {
+            setMsg("Password must be at least 4 characters long");
             return;
         }
         if (password !== confirm) {
@@ -58,7 +58,7 @@ export default function Register() {
 
                 <label>
                     Password
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Minimum 6 characters" minLength="6" required />
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Minimum 4 characters" minLength="4" required />
                 </label>
 
                 <label>
