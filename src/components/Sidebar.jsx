@@ -6,15 +6,15 @@ export default function Sidebar() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const gotoAllPosts = () => navigate("/");
-    const filterByTag = (tag) => navigate(`/?tag=${encodeURIComponent(tag)}`);
+    const gotoAllPosts = () => navigate("/posts");
+    const filterByTag = (tag) => navigate(`/posts/?tag=${encodeURIComponent(tag)}`);
 
     return (
         <aside className="sidebar">
             <h3>Posts</h3>
             <ul className="sidebar-menu">
                 <li
-                    className={location.pathname === "/" ? "active" : ""}
+                    className={location.pathname === "/posts" ? "active" : ""}
                     onClick={gotoAllPosts}
                 >
                     All Posts
