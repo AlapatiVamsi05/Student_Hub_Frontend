@@ -14,8 +14,6 @@ export default function Roadmaps() {
         const res = await fetch(`${API_BASE}/roadmaps`);
         const data = await res.json();
         setItems(data);
-
-        // decode token to check role
         const t = token();
         if (t) {
             try {

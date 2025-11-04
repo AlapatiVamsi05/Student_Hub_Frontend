@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { API_BASE } from "../App";
 
 export default function Login() {
-    const [id, setId] = useState(""); // username or email
+    const [id, setId] = useState("");
     const [password, setPassword] = useState("");
     const [msg, setMsg] = useState("");
     const navigate = useNavigate();
@@ -12,7 +12,6 @@ export default function Login() {
         e.preventDefault();
         setMsg("");
         try {
-            // backend allows either {username} or {email}
             const body = id.includes("@") ? { email: id, password } : { username: id, password };
             const res = await fetch(`${API_BASE}/login`, {
                 method: "POST",
