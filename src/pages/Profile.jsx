@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { API_BASE } from "../App";
 
-const token = localStorage.getItem("token");
+const token = () => localStorage.getItem("token");
 
 export default function Profile() {
     const [user, setUser] = useState(null);
@@ -9,9 +9,9 @@ export default function Profile() {
 
     useEffect(() => {
         const load = async () => {
-            if (!token) return;
+            if (!token()) return;
             const res = await fetch(`${API_BASE}/profile`, {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `Bearer ${token()}` },
             });
             const data = await res.json();
             setUser(data.user);
@@ -26,12 +26,12 @@ export default function Profile() {
         if (!window.confirm("Delete this post?")) return;
         await fetch(`${API_BASE}/posts/${id}`, {
             method: "DELETE",
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { Authorization: `Bearer ${token()}` },
         });
         setPosts((s) => s.filter((p) => p._id !== id));
     };
 
-    if (!token) return <div className="card">Please login first.</div>;
+    if (!token()) return <div className="card">Please login first.</div>;
     if (!user) return <div className="card">Loading profile...</div>;
 
     return (

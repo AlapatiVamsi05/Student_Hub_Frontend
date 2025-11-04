@@ -61,6 +61,7 @@ export default function Posts() {
     };
 
     const comment = async (id) => {
+        if (!token()) { alert("Login to comment."); return; }
         const text = (commentText[id] || "").trim();
         if (!text) return alert("Please write something");
         const body = { content: text, anonymous: !!commentAnon[id] };
