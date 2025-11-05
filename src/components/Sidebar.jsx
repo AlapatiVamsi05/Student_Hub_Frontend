@@ -7,6 +7,8 @@ export default function Sidebar() {
     const location = useLocation();
 
     const gotoAllPosts = () => navigate("/posts");
+    const gotoAllrepos = () => navigate("/repos");
+    const gotoAllroadm = () => navigate("/roadmaps");
     const filterByTag = (tag) => navigate(`/posts/?tag=${encodeURIComponent(tag)}`);
 
     return (
@@ -34,11 +36,17 @@ export default function Sidebar() {
 
             <h3>Explore</h3>
             <ul className="sidebar-menu">
-                <li className={location.pathname === "/roadmaps" ? "active" : ""}>
-                    <Link to="/roadmaps" style={{ color: "#fff", textDecoration: "none" }}>Roadmaps</Link>
+                <li
+                    className={location.pathname === "/roadmaps" ? "active" : ""}
+                    onClick={gotoAllroadm}
+                >
+                    Roadmaps
                 </li>
-                <li className={location.pathname === "/repos" ? "active" : ""}>
-                    <Link to="/repos" style={{ color: "#fff", textDecoration: "none" }}>Repositories</Link>
+                <li
+                    className={location.pathname === "/repos" ? "active" : ""}
+                    onClick={gotoAllrepos}
+                >
+                    Repositories
                 </li>
             </ul>
         </aside>
