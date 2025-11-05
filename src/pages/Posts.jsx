@@ -112,8 +112,21 @@ export default function Posts() {
                     <Card
                         key={p._id}
                         title={p.title}
-                        subtitle={`${new Date(p.createdAt).toLocaleString()}`}
-                        body={<span>{p.content}</span>}
+                        body={
+                            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                                <div
+                                    style={{
+                                        fontSize: 13,
+                                        color: "#6b7280", // gray-500
+                                        marginTop: "-6px"
+                                    }}
+                                >
+                                    {p.anonymous ? "Anonymous" : p.author?.username} ·{" "}
+                                    {new Date(p.createdAt).toLocaleString()}
+                                </div>
+                                <span>{p.content}</span>
+                            </div>
+                        }
                         footer={
                             <>
                                 <div

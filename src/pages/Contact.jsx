@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { API_BASE } from "../App";
 
+let token = () => localStorage.getItem("token");
+
 export default function Contact() {
+
+
+
     const [message, setMessage] = useState("");
     const [email, setEmail] = useState("");
     const [popupShown, setPopupShown] = useState(false);
@@ -9,12 +14,8 @@ export default function Contact() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!popupShown) {
-            alert("Your request will be sent to the admins for review. Thank you!");
-            setPopupShown(true);
-        }
-
         try {
+            if (!token()) { alert("You must be logged in to submit a request."); return; }
             const res = await fetch(`${API_BASE}/requests`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -31,6 +32,10 @@ export default function Contact() {
         } catch (err) {
             console.error(err);
             alert("Server error while submitting your request.");
+        }
+        if (!popupShown) {
+            alert("Your request will be sent to the admins for review. Thank you!");
+            setPopupShown(true);
         }
     };
 
